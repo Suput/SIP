@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ProjectSIP';
+  public isAuthorized: boolean;
+  constructor() {
+    this.isAuthorized = false;
+  }
 }
