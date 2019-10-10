@@ -11,7 +11,7 @@ namespace ProjectSIP.Controllers
     [ApiController]
     public class MainController : ControllerBase
     {
-        private readonly UserManager<User> userManager;
+        protected readonly UserManager<User> userManager;
 
         public MainController(UserManager<User> userManager)
         {
