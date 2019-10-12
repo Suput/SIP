@@ -2,9 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { UserView } from 'src/app/api/models';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
+  constructor(private router: Router) { }
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Apply headers
     req = req.clone({
@@ -14,6 +18,10 @@ export class ApiInterceptor implements HttpInterceptor {
     });
     return next.handle(req).pipe(
       tap(x => x, err => {
+
+        if (err.status === 401) {
+          this.router.navigate(['']);
+        }
         // Handle this error
         console.error(`Error performing request, status code = ${err.status}`);
       })
@@ -34,4 +42,8 @@ export class UserService {
     }
     return false;
   }
+
+  GetUserModel(): UserView {
+    return null;
+   }
 }
