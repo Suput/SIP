@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ApiModule } from './api/api.module';
 import { AuthComponent } from './auth/auth.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     ApiModule.forRoot({rootUrl: 'http://localhost:5000'})
   ],

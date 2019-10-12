@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using ProjectSIP.Models.Identity;
 using ProjectSIP.Models.Requests.Auth;
 using ProjectSIP.Models.Responses.Auth;
 using ProjectSIP.Models.Responses.Identity;
+using ProjectSIP.Services.Jwt;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +20,16 @@ namespace ProjectSIP.Controllers.Authentication
     public class AuthenticationController : MainController
     {
         private readonly IMapper mapper;
+        private readonly IJwtFactory jwtFactory;
 
-        public AuthenticationController(UserManager<User> userManager, IMapper mapper)
+        public AuthenticationController(UserManager<User> userManager, IMapper mapper, IJwtFactory jwtFactory)
             : base (userManager)
         {
             this.mapper = mapper;
+            this.jwtFactory = jwtFactory;
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult> CreateUser(CreateUserRequest createUserRequest)
         {
@@ -40,6 +45,7 @@ namespace ProjectSIP.Controllers.Authentication
             return BadRequest("Что-то пошло не так");
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<LoginResponse>> Login(LoginRequest loginRequest)
         {
@@ -57,7 +63,7 @@ namespace ProjectSIP.Controllers.Authentication
             => new LoginResponse
             {
                 User = mapper.Map<UserView>(user),
-                AccessToken = ""
+                AccessToken = jwtFactory.GenerateAccessToken(user.Id)
             };
     }
 }
