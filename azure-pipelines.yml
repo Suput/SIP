@@ -35,7 +35,7 @@ steps:
       };
     endWithNewLine: true
 
-- script: cd $(Build.ArtifactStagingDirectory) && dotnet tool restore
+- script: dotnet tool restore
   displayName: 'dotnet tool restore'
 
 - script: dotnet swagger tofile --output '$(Build.ArtifactStagingDirectory)/ClientApp/swagger.json' "$(Build.ArtifactStagingDirectory)/ProjectSIP.dll" v1
