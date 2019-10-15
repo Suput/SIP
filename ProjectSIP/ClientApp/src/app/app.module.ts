@@ -8,6 +8,8 @@ import { AuthComponent } from './auth/auth.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiInterceptor, UserService } from './services/httpBearer/user.service';
+import { environment } from 'src/environments/environment';
+
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -26,7 +28,7 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    ApiModule.forRoot({rootUrl: 'http://localhost:5000'})
+    ApiModule.forRoot({rootUrl: environment.baseApiUrl})
   ],
   providers: [
     UserService,
