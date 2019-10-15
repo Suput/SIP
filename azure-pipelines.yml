@@ -38,13 +38,21 @@ steps:
 - script: dotnet publish --configuration $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
   displayName: 'dotnet publish $(buildConfiguration)'
 
+- task: CopyFiles@2
+  displayName: 'Copy swagger'
+  inputs:
+    SourceFolder: '$(Build.ArtifactStagingDirectory)'
+    Contents: 'swagger.json'
+    TargetFolder: 'ProjectSIP/ClientApp'
+    OverWrite: true
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'project-sip-build'
 
 - task: CopyFiles@2
-  displayName: 'copy deploy artifact'
+  displayName: 'Copy deploy artifact'
   inputs:
     SourceFolder: 'Deploy'
     Contents: '**'
