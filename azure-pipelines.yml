@@ -39,7 +39,7 @@ steps:
   displayName: 'dotnet tool restore'
   inputs:
     command: 'custom'
-    projects: 'ProjectSIP'
+    projects: 'ProjectSIP/ProjectSIP.dll'
     custom: 'dotnet tool restore'
 
 - script: dotnet publish --configuration $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
