@@ -35,23 +35,11 @@ steps:
       };
     endWithNewLine: true
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet restore'
-  inputs:
-    command: 'restore'
-    feedsToUse: 'select'
-    versioningScheme: 'off'
+- script: dotnet swagger tofile --output '$(Build.ArtifactStagingDirectory)/ClientApp/swagger.json' "$(Build.ArtifactStagingDirectory)/ProjectSIP.dll" v1
+  displayName: 'dotnet publish $(buildConfiguration)'
 
 - script: dotnet publish --configuration $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
   displayName: 'dotnet publish $(buildConfiguration)'
-
-- task: CopyFiles@2
-  displayName: 'Copy swagger'
-  inputs:
-    SourceFolder: '$(Build.ArtifactStagingDirectory)'
-    Contents: 'swagger.json'
-    TargetFolder: 'ProjectSIP/ClientApp'
-    OverWrite: true
 
 - task: PublishBuildArtifacts@1
   inputs:
