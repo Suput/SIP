@@ -62,7 +62,7 @@
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="dotnet swagger tofile --output ProjectSIP/ClientApp/swagger.json  ProjectSIP/ProjectSIP.dll v1" />
+    <Exec Command="dotnet swagger tofile --output ProjectSIP/ClientApp/swagger.json  ProjectSIP/bin/Debug/netcoreapp3.0/ProjectSIP.dll v1" />
   </Target>
 
 </Project>
