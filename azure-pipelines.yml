@@ -36,11 +36,11 @@ steps:
     endWithNewLine: true
 
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet tool restore'
+  displayName: 'dotnet restore'
   inputs:
-    command: 'custom'
-    projects: 'ProjectSIP/ProjectSIP.dll'
-    custom: 'dotnet tool restore'
+    command: 'restore'
+    feedsToUse: 'select'
+    versioningScheme: 'off'
 
 - script: dotnet publish --configuration $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
   displayName: 'dotnet publish $(buildConfiguration)'
