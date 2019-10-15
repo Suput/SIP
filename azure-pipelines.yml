@@ -13,6 +13,17 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: file-creator@5
+  inputs:
+    fileoverwrite: true
+    filepath: 'ProjectSIP/ClientApp/src/environments/environment.prod.ts'
+    filecontent: |
+      export class environment = {
+        production: true,
+        baseApiUrl: ''
+      };
+    endWithNewLine: true
+
 - script: dotnet publish --configuration $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
   displayName: 'dotnet publish $(buildConfiguration)'
 
