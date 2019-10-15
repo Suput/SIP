@@ -35,14 +35,16 @@ steps:
       };
     endWithNewLine: true
 
-- script: dotnet new tool-manifest && dotnet tool install swashbuckle.aspnetcore.cli --version 5.0.0-rc3
-  displayName: 'dotnet tool restore'
-
-- script: dotnet swagger tofile --output '$(Build.ArtifactStagingDirectory)/ClientApp/swagger.json' "$(Build.ArtifactStagingDirectory)/ProjectSIP.dll" v1
-  displayName: 'dotnet swagger tofile'
-
-- script: dotnet publish --configuration $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
-  displayName: 'dotnet publish $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
+  inputs:
+    command: 'restore'
+    feedsToUse: 'select'
+    versioningScheme: 'off'
+    
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
 
 - task: PublishBuildArtifacts@1
   inputs:
