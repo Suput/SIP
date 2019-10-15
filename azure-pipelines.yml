@@ -41,7 +41,10 @@ steps:
     command: 'restore'
     feedsToUse: 'select'
     versioningScheme: 'off'
-    
+
+- script: dotnet new tool-manifest && dotnet tool install swashbuckle.aspnetcore.cli --version 5.0.0-rc3
+  displayName: 'dotnet tool restore'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
