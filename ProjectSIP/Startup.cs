@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProjectSIP.Data;
+using ProjectSIP.Exceptions;
 using ProjectSIP.Models.Identity;
 using ProjectSIP.Models.Options;
 using ProjectSIP.Services.Configure;
@@ -123,6 +124,7 @@ namespace ProjectSIP
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
+                options.Filters.Add(new CustomExceptionFilter());
             }).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
         }
 
