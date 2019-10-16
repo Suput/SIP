@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { UserService } from './services/httpBearer/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,21 +8,16 @@ import { UserService } from './services/httpBearer/user.service';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit, OnChanges {
+export class AppComponent implements OnInit {
   title = 'ProjectSIP';
   public isAuthorized: boolean;
-  constructor(private userService: UserService) { }
-
-  ngOnChanges() {
-    this.CheckAuthorization();
-  }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    this.CheckAuthorization();
-  }
-
-  CheckAuthorization(): void {
-    this.isAuthorized = this.userService.IsAuthorizated();
-    console.log('Is user authorized: ' + this.isAuthorized);
+    if (this.userService.IsAuthorizated()) {
+      this.router.navigate(['main']);
+    } else {
+      this.router.navigate(['auth']);
+    }
   }
 }

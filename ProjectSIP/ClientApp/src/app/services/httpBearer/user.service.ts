@@ -19,8 +19,11 @@ export class ApiInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       tap(x => x, err => {
 
-        if (err.status === 401) {
-          this.router.navigate(['']);
+        if (err.status === 404) {
+          this.router.navigate(['notfound']);
+        }
+        if (err.status === 404) {
+          this.router.navigate(['notauth']);
         }
         // Handle this error
         console.error(`Error performing request, status code = ${err.status}`);
