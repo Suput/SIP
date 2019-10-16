@@ -9,6 +9,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiInterceptor, UserService } from './services/httpBearer/user.service';
 import { environment } from 'src/environments/environment';
+import { MainComponent } from './main/main.component';
+import { DocsComponent } from './docs/docs.component';
+import { MessagesComponent } from './messages/messages.component';
+import { HelpComponent } from './help/help.component';
+import { NotfoundComponent } from './notfound/notfound.component';
+import { NotauthComponent } from './notauth/notauth.component';
 
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
@@ -20,7 +26,13 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent
+    AuthComponent,
+    MainComponent,
+    DocsComponent,
+    MessagesComponent,
+    HelpComponent,
+    NotfoundComponent,
+    NotauthComponent
   ],
   imports: [
     BrowserModule,

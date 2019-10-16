@@ -27,7 +27,7 @@ export class AuthComponent implements OnInit {
       console.log('User tried to logged: ' + response.status);
       console.log('User\'s token: ' + response.body.accessToken);
       localStorage.setItem('token', response.body.accessToken);
-      this.router.navigate(['']);
+      this.router.navigate(['main']);
     } catch (ex) {
       console.error(ex);
     }
