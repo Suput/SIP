@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
+using Microsoft.Extensions.Hosting;
 
 namespace ProjectSIP.Exceptions
 {
-    [Obsolete]
     public class CustomExceptionFilter : ExceptionFilterAttribute
     {
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IWebHostEnvironment hostingEnvironment;
 
-        public CustomExceptionFilter(IHostingEnvironment hostingEnvironment)
+        public CustomExceptionFilter(IWebHostEnvironment hostingEnvironment)
         {
             this.hostingEnvironment = hostingEnvironment;
         }
@@ -19,7 +18,7 @@ namespace ProjectSIP.Exceptions
             string actionName = context.ActionDescriptor.DisplayName;
             string exceptionStack = context.Exception.StackTrace;
             string exceptionMessage = context.Exception.Message;
-            if (!hostingEnvironment.IsDevelopment())
+            if (hostingEnvironment.IsDevelopment())
             {
                 context.Result = new ConflictObjectResult($"В методе {actionName} возникло исключение: \n {exceptionMessage} \n {exceptionStack}");
             }

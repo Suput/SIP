@@ -57,7 +57,7 @@ namespace ProjectSIP.Controllers.Documents
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DocumentView>>> GetAllDocs()
-            => Ok(
+        => Ok(
                 await (context
                     .Documents)
                 .ProjectTo<DocumentView>(mapper.ConfigurationProvider)

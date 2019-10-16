@@ -124,7 +124,6 @@ namespace ProjectSIP
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
-                options.Filters.Add(new CustomExceptionFilter());
             }).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
         }
 
