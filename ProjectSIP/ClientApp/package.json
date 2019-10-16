@@ -4,11 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run generate && ng serve",
-    "build": "ng build",
+    "build": "npm run generate && ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "generate": "ng-openapi-gen -i http://localhost:5000/swagger/v1/swagger.json"
+    "generate": "ng-openapi-gen -i swagger.json"
   },
   "private": true,
   "dependencies": {
@@ -16,10 +16,11 @@
     "@angular/common": "~8.2.8",
     "@angular/compiler": "~8.2.8",
     "@angular/core": "~8.2.8",
-    "@angular/forms": "~8.2.8",
+    "@angular/forms": "^8.2.10",
     "@angular/platform-browser": "~8.2.8",
     "@angular/platform-browser-dynamic": "~8.2.8",
     "@angular/router": "~8.2.8",
+    "bootstrap": "^4.3.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
