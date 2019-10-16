@@ -23,6 +23,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.0.1" />
+    <PackageReference Include="RTUITLab.WebApp.Configure" Version="1.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
   </ItemGroup>
 
@@ -59,10 +60,6 @@
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       </ResolvedFileToPublish>
     </ItemGroup>
-  </Target>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="dotnet swagger tofile --output ProjectSIP/ClientApp/swagger.json  ProjectSIP/bin/Debug/netcoreapp3.0/ProjectSIP.dll v1" />
   </Target>
 
 </Project>

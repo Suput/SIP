@@ -13,10 +13,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProjectSIP.Data;
+using ProjectSIP.Exceptions;
 using ProjectSIP.Models.Identity;
 using ProjectSIP.Models.Options;
+using ProjectSIP.Services.Configure;
 using ProjectSIP.Services.Jwt;
 using System;
+using WebApp.Configure.Models;
 
 namespace ProjectSIP
 {
@@ -109,6 +112,10 @@ namespace ProjectSIP
                     };
                 });
 
+            // web app configure (503)
+            services.AddWebAppConfigure()
+                .AddTransientConfigure<ApplyMigrations>(Configuration.GetValue<bool>("MIGRATE"));
+
             services.AddMvc(options =>
             {
                 options.EnableEndpointRouting = true;
@@ -146,12 +153,6 @@ namespace ProjectSIP
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller}/{action=Index}/{id?}");
-            //});
 
             app.UseSpa(spa =>
             {
