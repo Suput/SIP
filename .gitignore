@@ -339,3 +339,6 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 ProjectSIP/ClientApp/src/environments/
+
+ProjectSIP/ClientApp/swagger.json
+ProjectSIP/ClientApp/src/app/api

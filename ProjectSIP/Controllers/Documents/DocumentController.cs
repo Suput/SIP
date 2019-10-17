@@ -59,7 +59,9 @@ namespace ProjectSIP.Controllers.Documents
         public async Task<ActionResult<IEnumerable<DocumentView>>> GetAllDocs()
         => Ok(
                 await (context
-                    .Documents)
+                    .Documents
+                    .Include(doc => doc.From.User)
+                    .Include(doc => doc.To.User))
                 .ProjectTo<DocumentView>(mapper.ConfigurationProvider)
                 .ToListAsync());
 

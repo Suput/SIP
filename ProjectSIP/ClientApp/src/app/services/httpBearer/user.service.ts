@@ -22,7 +22,7 @@ export class ApiInterceptor implements HttpInterceptor {
         if (err.status === 404) {
           this.router.navigate(['notfound']);
         }
-        if (err.status === 404) {
+        if (err.status === 401) {
           this.router.navigate(['notauth']);
         }
         if (err.status === 409) {
@@ -42,7 +42,7 @@ export class UserService {
 
   constructor() { }
 
-  IsAuthorizated() {
+  IsAuthorizated(): boolean {
     if (localStorage.getItem('token')) {
       return true;
     }

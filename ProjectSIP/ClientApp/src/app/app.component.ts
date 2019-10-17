@@ -14,9 +14,8 @@ export class AppComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    if (this.userService.IsAuthorizated()) {
-      this.router.navigate(['main']);
-    } else {
+    console.log(this.userService.IsAuthorizated());
+    if (!this.userService.IsAuthorizated()) {
       this.router.navigate(['auth']);
     }
   }

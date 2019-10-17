@@ -9,7 +9,11 @@ namespace ProjectSIP.Models.Document
         public string Content { get; set; }
         public DateTime SigntureDate { get; set; }
         public DateTime CreationDate { get; set; }
+
+        public int FromId { get; set; }
         public From From { get; set; }
+
+        public int ToId { get; set; }
         public To To { get; set; }
 
         // specific
