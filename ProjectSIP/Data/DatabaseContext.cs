@@ -26,6 +26,10 @@ namespace ProjectSIP.Data
             builder.Entity<To>(opt =>
             {
                 opt.HasKey(to => to.Id);
+
+                opt.HasOne(to => to.User)
+                    .WithMany(u => u.Tos)
+                    .HasForeignKey(to => to.UserId);
             });
         }
 
@@ -34,6 +38,10 @@ namespace ProjectSIP.Data
             builder.Entity<From>(opt =>
             {
                 opt.HasKey(from => from.Id);
+
+                opt.HasOne(from => from.User)
+                    .WithMany(u => u.Froms)
+                    .HasForeignKey(from => from.UserId);
             });
         }
 
@@ -42,6 +50,14 @@ namespace ProjectSIP.Data
             builder.Entity<Document>(opt =>
             {
                 opt.HasKey(doc => doc.Id);
+
+                opt.HasOne(doc => doc.From)
+                    .WithMany(from => from.Documents)
+                    .HasForeignKey(doc => doc.FromId);
+
+                opt.HasOne(doc => doc.To)
+                    .WithMany(to => to.Documents)
+                    .HasForeignKey(doc => doc.ToId);
             });
         }
     }
