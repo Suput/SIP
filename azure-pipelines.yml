@@ -1,0 +1,68 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: file-creator@5
+  inputs:
+    fileoverwrite: true
+    filepath: 'ProjectSIP/ClientApp/src/environments/environment.ts'
+    filecontent: |
+      export class environment = {
+        production: false,
+        baseApiUrl: ''
+      };
+    endWithNewLine: true
+
+- task: file-creator@5
+  inputs:
+    fileoverwrite: true
+    filepath: 'ProjectSIP/ClientApp/src/environments/environment.prod.ts'
+    filecontent: |
+      export class environment = {
+        production: true,
+        baseApiUrl: ''
+      };
+    endWithNewLine: true
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
+  inputs:
+    command: 'restore'
+    feedsToUse: 'select'
+    versioningScheme: 'off'
+
+- script: dotnet new tool-manifest && dotnet tool install swashbuckle.aspnetcore.cli --version 5.0.0-rc3
+  displayName: 'dotnet tool restore'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'project-sip-build'
+
+- task: CopyFiles@2
+  displayName: 'Copy deploy artifact'
+  inputs:
+    SourceFolder: 'Deploy'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    CleanTargetFolder: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: project-sip-deploy'
+  inputs:
+    ArtifactName: 'project-sip-deploy'

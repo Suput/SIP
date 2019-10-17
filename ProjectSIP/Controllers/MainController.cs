@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace ProjectSIP.Controllers
 {
+    //[CustomExceptionFilter]
+    [TypeFilter(typeof(CustomExceptionFilter))]
     [Produces("application/json")]
     [ApiController]
     public class MainController : ControllerBase
