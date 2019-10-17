@@ -1,15 +1,21 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProjectSIP.Data;
 using ProjectSIP.Models.Identity;
+using ProjectSIP.Models.Options;
+using ProjectSIP.Services.Jwt;
 using System;
 
 namespace ProjectSIP
@@ -26,6 +32,10 @@ namespace ProjectSIP
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // add options to project
+            services.Configure<JwtOptions>(Configuration.GetSection(nameof(JwtOptions)));
+
+            // Configure database
             string connection = Configuration.GetConnectionString("PostgreSQL");
             services.AddEntityFrameworkNpgsql()
                     .AddDbContext<DatabaseContext>(options =>
@@ -69,9 +79,44 @@ namespace ProjectSIP
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            // Add transients for interfaces
+            services.AddTransient<IJwtFactory, JwtFactory>();
+
+            // JWT configuration
+            var jwtOptions = Configuration.GetSection(nameof(JwtOptions)).Get<JwtOptions>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        // do we need to validate publisher while token is validating
+                        ValidateIssuer = true,
+                        // publisher
+                        ValidIssuer = jwtOptions.Issuer,
+
+                        // do we need to validate consumer
+                        ValidateAudience = true,
+                        // setting consumer token
+                        ValidAudience = jwtOptions.Audience,
+                        // do we need to validate time of existence
+                        ValidateLifetime = true,
+
+                        // setting security key
+                        IssuerSigningKey = jwtOptions.SymmetricSecurityKey,
+                        // validation of security key
+                        ValidateIssuerSigningKey = true,
+                    };
+                });
+
             services.AddMvc(options =>
             {
                 options.EnableEndpointRouting = false;
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
             }).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
         }
 

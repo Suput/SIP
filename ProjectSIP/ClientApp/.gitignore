@@ -45,6 +45,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# api
-src/app/api
-!src/app/api/app.module.ts
+/src/app/api
+
+/src/environments
