@@ -32,7 +32,7 @@ steps:
     filecontent: |
       export class environment = {
         production: true,
-        baseApiUrl: ''
+        baseApiUrl: 'http://[::]:80'
       };
     endWithNewLine: true
 
