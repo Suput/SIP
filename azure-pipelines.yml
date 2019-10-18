@@ -21,7 +21,7 @@ steps:
     filecontent: |
       export class environment = {
         production: false,
-        baseApiUrl: ''
+        baseApiUrl: 'http://localhost:5000'
       };
     endWithNewLine: true
 
