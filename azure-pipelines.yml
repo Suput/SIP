@@ -19,6 +19,7 @@ steps:
     fileoverwrite: true
     filepath: 'ProjectSIP/ClientApp/src/environments/environment.ts'
     filecontent: |
+      // environment
       export class environment = {
         production: false,
         baseApiUrl: 'http://localhost:5000'
@@ -30,6 +31,7 @@ steps:
     fileoverwrite: true
     filepath: 'ProjectSIP/ClientApp/src/environments/environment.prod.ts'
     filecontent: |
+      // environment
       export class environment = {
         production: true,
         baseApiUrl: 'http://[::]:80'
