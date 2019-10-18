@@ -14,8 +14,31 @@ variables:
 
 steps:
 
+- task: file-creator@5
+  inputs:
+    fileoverwrite: true
+    filepath: 'ClientApp/src/environments/environment.ts'
+    filecontent: |
+      export class environment = {
+        production: false,
+        baseApiUrl: ''
+      };
+    endWithNewLine: true
+
+- task: file-creator@5
+  inputs:
+    fileoverwrite: true
+    filepath: 'ClientApp/src/environments/environment.prod.ts'
+    filecontent: |
+      export class environment = {
+        production: true,
+        baseApiUrl: ''
+      };
+    endWithNewLine: true
+
 - script: dotnet publish --configuration $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
   displayName: 'dotnet publish $(buildConfiguration)'
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
