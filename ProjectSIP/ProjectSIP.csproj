@@ -63,7 +63,7 @@
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="dotnet tool restore  --tool-manifest &quot;$(ProjectDir)\.config\dotnet-tools.json&quot;&#xD;&#xA;dotnet swagger tofile --output &quot;ClientApp/swagger.json&quot; &quot;$(TargetPath)&quot; v1" />
+    <Exec Command="dotnet tool restore  --tool-manifest &quot;$(ProjectDir)/.config/dotnet-tools.json&quot;&#xD;&#xA;dotnet swagger tofile --output &quot;ClientApp/swagger.json&quot; &quot;$(TargetPath)&quot; v1" />
   </Target>
 
 </Project>
