@@ -17,7 +17,7 @@ steps:
 - task: file-creator@5
   inputs:
     fileoverwrite: true
-    filepath: 'ClientApp/src/environments/environment.ts'
+    filepath: 'ProjectSIP/ClientApp/src/environments/environment.ts'
     filecontent: |
       export class environment = {
         production: false,
@@ -28,7 +28,7 @@ steps:
 - task: file-creator@5
   inputs:
     fileoverwrite: true
-    filepath: 'ClientApp/src/environments/environment.prod.ts'
+    filepath: 'ProjectSIP/ClientApp/src/environments/environment.prod.ts'
     filecontent: |
       export class environment = {
         production: true,
