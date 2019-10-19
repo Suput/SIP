@@ -49,8 +49,7 @@ export class UserService {
     return false;
   }
 
-  GetUserModel(): UserView {
-    // return await this.accountService.apiAccountUserIdGet().toPromise();
-    return null;
+  async GetUserModel(): Promise<UserView> {
+    return await this.accountService.apiAccountUserIdGet({userId: +localStorage.getItem('cuurentUserId')}).toPromise();
    }
 }
