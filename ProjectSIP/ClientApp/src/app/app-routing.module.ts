@@ -8,6 +8,7 @@ import { HelpComponent } from './main/help/help.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { NotauthComponent } from './notauth/notauth.component';
 import { AppComponent } from './app.component';
+import { ConflictComponent } from './conflict/conflict.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   ] },
   { path: 'notfound', component: NotfoundComponent },
   { path: 'notauth', component: NotauthComponent },
+  { path: 'conflict/:error', component: ConflictComponent },
   { path: '**', component: NotfoundComponent}
 ];
 

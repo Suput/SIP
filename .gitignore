@@ -342,3 +342,4 @@ ProjectSIP/ClientApp/src/environments/
 
 ProjectSIP/ClientApp/swagger.json
 ProjectSIP/ClientApp/src/app/api
+/ProjectSIP/appsettings.secret.json
