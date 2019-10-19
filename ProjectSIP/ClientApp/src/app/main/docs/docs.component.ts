@@ -9,7 +9,7 @@ import { DocsService } from './docs.service';
 })
 export class DocsComponent implements OnInit {
 
-  private docs: DocumentView[];
+  public docs: DocumentView[];
   constructor(private docstService: DocsService) { }
 
   async ngOnInit() {

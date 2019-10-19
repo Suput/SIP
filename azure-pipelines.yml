@@ -13,14 +13,16 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
 - task: file-creator@5
   inputs:
     fileoverwrite: true
     filepath: 'ProjectSIP/ClientApp/src/environments/environment.ts'
     filecontent: |
-      export class environment = {
+      // environment
+      export const environment = {
         production: false,
-        baseApiUrl: ''
+        baseApiUrl: 'http://localhost:5000'
       };
     endWithNewLine: true
 
@@ -29,25 +31,15 @@ steps:
     fileoverwrite: true
     filepath: 'ProjectSIP/ClientApp/src/environments/environment.prod.ts'
     filecontent: |
-      export class environment = {
+      // environment
+      export const environment = {
         production: true,
         baseApiUrl: ''
       };
     endWithNewLine: true
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet restore'
-  inputs:
-    command: 'restore'
-    feedsToUse: 'select'
-    versioningScheme: 'off'
-
-- script: dotnet new tool-manifest && dotnet tool install swashbuckle.aspnetcore.cli --version 5.0.0-rc3
-  displayName: 'dotnet tool restore'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
+- script: dotnet publish --configuration $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
+  displayName: 'dotnet publish $(buildConfiguration)'
 
 - task: PublishBuildArtifacts@1
   inputs:
