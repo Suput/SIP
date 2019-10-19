@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { UserView } from 'src/app/api/models';
 import { Router } from '@angular/router';
+import { AccountService } from 'src/app/api/services';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
@@ -22,16 +23,15 @@ export class ApiInterceptor implements HttpInterceptor {
         if (err.status === 404) {
           this.router.navigate(['notfound']);
         }
-        if (err.status === 404) {
+        if (err.status === 401) {
           this.router.navigate(['notauth']);
         }
         if (err.status === 409) {
-          this.router.navigate(['conflict']);
+          this.router.navigate(['conflict', err.error]);
         }
         // Handle this error
         console.error(`Error performing request, status code = ${err.status}`);
-      })
-    );
+      }));
   }
 }
 
@@ -40,9 +40,9 @@ export class ApiInterceptor implements HttpInterceptor {
 })
 export class UserService {
 
-  constructor() { }
+  constructor(private accountService: AccountService) { }
 
-  IsAuthorizated() {
+  IsAuthorizated(): boolean {
     if (localStorage.getItem('token')) {
       return true;
     }
@@ -50,6 +50,7 @@ export class UserService {
   }
 
   GetUserModel(): UserView {
+    // return await this.accountService.apiAccountUserIdGet().toPromise();
     return null;
    }
 }

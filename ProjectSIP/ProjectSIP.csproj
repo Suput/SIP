@@ -34,6 +34,14 @@
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ClientApp\src\environments\environment.prod.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\environments\environment.prod.ts" />
+  </ItemGroup>
+
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
@@ -60,6 +68,10 @@
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       </ResolvedFileToPublish>
     </ItemGroup>
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="dotnet tool restore  --tool-manifest &quot;$(ProjectDir)/.config/dotnet-tools.json&quot;&#xD;&#xA;dotnet swagger tofile --output &quot;ClientApp/swagger.json&quot; &quot;$(TargetPath)&quot; v1" />
   </Target>
 
 </Project>

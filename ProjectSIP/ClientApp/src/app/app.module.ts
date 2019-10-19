@@ -8,13 +8,16 @@ import { AuthComponent } from './auth/auth.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiInterceptor, UserService } from './services/httpBearer/user.service';
-import { environment } from 'src/environments/environment';
 import { MainComponent } from './main/main.component';
-import { DocsComponent } from './docs/docs.component';
-import { MessagesComponent } from './messages/messages.component';
-import { HelpComponent } from './help/help.component';
+import { DocsComponent } from './main/docs/docs.component';
+import { MessagesComponent } from './main/messages/messages.component';
+import { HelpComponent } from './main/help/help.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { NotauthComponent } from './notauth/notauth.component';
+import { environment } from 'src/environments/environment';
+import { DatePipe } from '@angular/common';
+import { DocsService } from './main/docs/docs.service';
+import { ConflictComponent } from './conflict/conflict.component';
 
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
@@ -32,7 +35,8 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     MessagesComponent,
     HelpComponent,
     NotfoundComponent,
-    NotauthComponent
+    NotauthComponent,
+    ConflictComponent
   ],
   imports: [
     BrowserModule,
@@ -43,9 +47,12 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     ApiModule.forRoot({rootUrl: environment.baseApiUrl})
   ],
   providers: [
-    UserService,
-    ApiInterceptor,
-    API_INTERCEPTOR_PROVIDER],
+    DocsService, // my
+    DatePipe, // ang
+    UserService, // my
+    ApiInterceptor, // my
+    API_INTERCEPTOR_PROVIDER // my
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
