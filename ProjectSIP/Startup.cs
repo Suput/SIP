@@ -13,7 +13,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProjectSIP.Data;
-using ProjectSIP.Exceptions;
 using ProjectSIP.Models.Identity;
 using ProjectSIP.Models.Options;
 using ProjectSIP.Services.Configure;
@@ -37,6 +36,7 @@ namespace ProjectSIP
         {
             // add options to project
             services.Configure<JwtOptions>(Configuration.GetSection(nameof(JwtOptions)));
+            services.Configure<FillDbOptions>(Configuration.GetSection(nameof(FillDbOptions)));
 
             // Configure database
             string connection = Configuration.GetConnectionString("PostgreSQL");
@@ -114,7 +114,8 @@ namespace ProjectSIP
 
             // web app configure (503)
             services.AddWebAppConfigure()
-                .AddTransientConfigure<ApplyMigrations>(Configuration.GetValue<bool>("MIGRATE"));
+                .AddTransientConfigure<ApplyMigrations>(Configuration.GetValue<bool>("MIGRATE"))
+                .AddTransientConfigure<FillDb>(Configuration.GetValue<bool>("FILL_DB"));
 
             services.AddMvc(options =>
             {

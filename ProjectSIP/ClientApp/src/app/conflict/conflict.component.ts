@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./conflict.component.css']
 })
 export class ConflictComponent implements OnInit {
-  private error: string;
+  public error: string;
 
   constructor(private route: ActivatedRoute) { }
 
