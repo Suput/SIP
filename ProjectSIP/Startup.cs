@@ -13,10 +13,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProjectSIP.Data;
+using ProjectSIP.Exceptions;
 using ProjectSIP.Models.Identity;
 using ProjectSIP.Models.Options;
+using ProjectSIP.Services.Configure;
 using ProjectSIP.Services.Jwt;
 using System;
+using WebApp.Configure.Models;
 
 namespace ProjectSIP
 {
@@ -109,9 +112,13 @@ namespace ProjectSIP
                     };
                 });
 
+            // web app configure (503)
+            services.AddWebAppConfigure()
+                .AddTransientConfigure<ApplyMigrations>(Configuration.GetValue<bool>("MIGRATE"));
+
             services.AddMvc(options =>
             {
-                options.EnableEndpointRouting = false;
+                options.EnableEndpointRouting = true;
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
@@ -139,11 +146,12 @@ namespace ProjectSIP
                 app.UseSpaStaticFiles();
             }
 
-            app.UseMvc(routes =>
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                    pattern: "{controller}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>

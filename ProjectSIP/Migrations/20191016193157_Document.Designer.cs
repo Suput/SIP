@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProjectSIP.Data;
@@ -9,9 +10,10 @@ using ProjectSIP.Data;
 namespace ProjectSIP.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20191016193157_Document")]
+    partial class Document
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,7 +138,7 @@ namespace ProjectSIP.Migrations
                     b.Property<string>("DocumentNumber")
                         .HasColumnType("text");
 
-                    b.Property<int>("FromId")
+                    b.Property<int?>("FromId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("PeriodEnd")
@@ -151,7 +153,7 @@ namespace ProjectSIP.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
-                    b.Property<int>("ToId")
+                    b.Property<int?>("ToId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -173,7 +175,7 @@ namespace ProjectSIP.Migrations
                     b.Property<string>("Departure")
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -193,7 +195,7 @@ namespace ProjectSIP.Migrations
                     b.Property<string>("Departure")
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -366,34 +368,26 @@ namespace ProjectSIP.Migrations
             modelBuilder.Entity("ProjectSIP.Models.Document.Document", b =>
                 {
                     b.HasOne("ProjectSIP.Models.Document.From", "From")
-                        .WithMany("Documents")
-                        .HasForeignKey("FromId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("FromId");
 
                     b.HasOne("ProjectSIP.Models.Document.To", "To")
-                        .WithMany("Documents")
-                        .HasForeignKey("ToId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("ToId");
                 });
 
             modelBuilder.Entity("ProjectSIP.Models.Document.From", b =>
                 {
                     b.HasOne("ProjectSIP.Models.Identity.User", "User")
-                        .WithMany("Froms")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ProjectSIP.Models.Document.To", b =>
                 {
                     b.HasOne("ProjectSIP.Models.Identity.User", "User")
-                        .WithMany("Tos")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
