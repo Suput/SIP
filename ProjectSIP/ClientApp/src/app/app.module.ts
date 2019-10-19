@@ -17,6 +17,7 @@ import { NotauthComponent } from './notauth/notauth.component';
 import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
 import { DocsService } from './main/docs/docs.service';
+import { ConflictComponent } from './conflict/conflict.component';
 
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
@@ -34,7 +35,8 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     MessagesComponent,
     HelpComponent,
     NotfoundComponent,
-    NotauthComponent
+    NotauthComponent,
+    ConflictComponent
   ],
   imports: [
     BrowserModule,
