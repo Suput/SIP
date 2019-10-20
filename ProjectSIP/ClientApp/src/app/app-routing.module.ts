@@ -12,6 +12,7 @@ import { ConflictComponent } from './conflict/conflict.component';
 import { DocsDetailComponent } from './main/docs-detail/docs-detail.component';
 import { AdminComponent } from './main/admin/admin.component';
 import { RegisterComponent } from './main/admin/register/register.component';
+import { AccountComponent } from './main/account/account.component';
 
 
 const routes: Routes = [
@@ -26,7 +27,8 @@ const routes: Routes = [
     { path: 'help', component: HelpComponent },
     { path: 'admin', component: AdminComponent, children: [
       { path: 'register', component: RegisterComponent}
-    ] }
+    ] },
+    { path: 'account', component: AccountComponent }
   ] },
   { path: 'notfound', component: NotfoundComponent },
   { path: 'notauth', component: NotauthComponent },
