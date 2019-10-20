@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from './services/httpBearer/user.service';
 import { Router } from '@angular/router';
 
@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 
 export class AppComponent implements OnInit {
   title = 'ProjectSIP';
-  public isAuthorized: boolean;
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
