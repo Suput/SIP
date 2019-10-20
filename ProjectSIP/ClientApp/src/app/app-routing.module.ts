@@ -9,6 +9,9 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { NotauthComponent } from './notauth/notauth.component';
 import { AppComponent } from './app.component';
 import { ConflictComponent } from './conflict/conflict.component';
+import { DocsDetailComponent } from './main/docs-detail/docs-detail.component';
+import { AdminComponent } from './main/admin/admin.component';
+import { RegisterComponent } from './main/admin/register/register.component';
 
 
 const routes: Routes = [
@@ -16,9 +19,14 @@ const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'main', component: MainComponent, children: [
     { path: '', component: DocsComponent },
-    { path: 'docs', component: DocsComponent },
+    { path: 'docs', component: DocsComponent, children: [
+      { path: 'detail/:doc', component: DocsDetailComponent }
+    ] },
     { path: 'messages', component: MessagesComponent },
-    { path: 'help', component: HelpComponent }
+    { path: 'help', component: HelpComponent },
+    { path: 'admin', component: AdminComponent, children: [
+      { path: 'register', component: RegisterComponent}
+    ] }
   ] },
   { path: 'notfound', component: NotfoundComponent },
   { path: 'notauth', component: NotauthComponent },

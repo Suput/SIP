@@ -18,6 +18,9 @@ import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
 import { DocsService } from './main/docs/docs.service';
 import { ConflictComponent } from './conflict/conflict.component';
+import { DocsDetailComponent } from './main/docs-detail/docs-detail.component';
+import { RegisterComponent } from './main/admin/register/register.component';
+import { AdminComponent } from './main/admin/admin.component';
 
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
@@ -36,7 +39,10 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     HelpComponent,
     NotfoundComponent,
     NotauthComponent,
-    ConflictComponent
+    ConflictComponent,
+    DocsDetailComponent,
+    RegisterComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

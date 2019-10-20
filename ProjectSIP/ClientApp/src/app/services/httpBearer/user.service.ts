@@ -50,6 +50,6 @@ export class UserService {
   }
 
   async GetUserModel(): Promise<UserView> {
-    return await this.accountService.apiAccountUserIdGet({userId: +localStorage.getItem('cuurentUserId')}).toPromise();
+    return await this.accountService.apiAccountUserIdGet({userId: +localStorage.getItem('currentUserId')}).toPromise();
    }
 }
