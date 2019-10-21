@@ -11,6 +11,9 @@ namespace ProjectSIP.Automapper
         {
             CreateMap<CreateUserRequest, User>();
             CreateMap<User, UserView>();
+
+            // roles
+            CreateMap<Role, RoleView>();
         }
     }
 }

@@ -8,6 +8,7 @@ using ProjectSIP.Models.Identity;
 using ProjectSIP.Models.Requests.Auth;
 using ProjectSIP.Models.Responses.Auth;
 using ProjectSIP.Models.Responses.Identity;
+using ProjectSIP.Services.Configure;
 using ProjectSIP.Services.Jwt;
 using System;
 using System.Collections.Generic;
@@ -34,15 +35,19 @@ namespace ProjectSIP.Controllers.Authentication
         public async Task<ActionResult> CreateUser(CreateUserRequest createUserRequest)
         {
             if (await userManager.Users.AnyAsync(u => u.Email == createUserRequest.Email))
-                return BadRequest("Пользователь с такой почтой уже существует");
+                return Conflict("Пользователь с такой почтой уже существует");
 
             var user = mapper.Map<User>(createUserRequest);
             user.UserName = user.Email;
             var result = await userManager.CreateAsync(user, createUserRequest.Password);
             if (result.Succeeded)
-                return Ok("Вы зарегистрированы!");
+            {
+                result = await userManager.AddToRoleAsync(user, RolesConstants.user);
+                if (result.Succeeded)
+                    return Ok("Вы зарегистрированы!");
+            }
 
-            return BadRequest("Что-то пошло не так");
+            return Conflict("Что-то пошло не так");
         }
 
         [AllowAnonymous]
@@ -53,17 +58,17 @@ namespace ProjectSIP.Controllers.Authentication
                 ?? throw new CantFindUserException();
 
             if (!await userManager.CheckPasswordAsync(user, loginRequest.Password))
-                return BadRequest("Неверный пароль");
+                return Conflict("Неверный пароль");
 
-            var loginResponse = GetLoginResponse(user);
+            var loginResponse = await GetLoginResponse(user);
             return Ok(loginResponse);
         }
 
-        private LoginResponse GetLoginResponse(User user)
+        private async Task<LoginResponse> GetLoginResponse(User user)
             => new LoginResponse
             {
                 User = mapper.Map<UserView>(user),
-                AccessToken = jwtFactory.GenerateAccessToken(user.Id)
+                AccessToken = jwtFactory.GenerateAccessToken(user.Id, (await userManager.GetRolesAsync(user)).ToList())
             };
     }
 }
