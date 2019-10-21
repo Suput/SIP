@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace ProjectSIP.Services.Jwt
 {
@@ -17,13 +16,14 @@ namespace ProjectSIP.Services.Jwt
         {
             this.options = options.Value;
         }
-        public string GenerateAccessToken(int userId)
+        public string GenerateAccessToken(int userId, List<string> roles)
         {
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow + options.LifeTime).ToString(), ClaimValueTypes.Integer64)
             };
+            claims.AddRange(roles.Select(name => new Claim(ClaimTypes.Role, name)));
 
             // Create the JWT security token and encode it.
             var jwt = new JwtSecurityToken(
