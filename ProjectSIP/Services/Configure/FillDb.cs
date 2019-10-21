@@ -2,12 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using ProjectSIP.Data;
 using ProjectSIP.Models.Identity;
 using ProjectSIP.Models.Options;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebApp.Configure.Models.Configure.Interfaces;
 
@@ -15,13 +12,12 @@ namespace ProjectSIP.Services.Configure
 {
     public static class RolesConstants
     {
-        public static string admin = "admin";
-        public static string user = "user";
+        public const string admin = "admin";
+        public const string user = "user";
     }
 
     public class FillDb : IConfigureWork
     {
-        private readonly DatabaseContext context;
         private readonly UserManager<User> userManager;
         private readonly RoleManager<Role> roleManager;
         private readonly ILogger<FillDb> logger;
@@ -30,11 +26,10 @@ namespace ProjectSIP.Services.Configure
         private int tryCount = 10;
         private TimeSpan tryPeriod = TimeSpan.FromSeconds(5);
 
-        public FillDb(DatabaseContext context, IOptions<FillDbOptions> options,
+        public FillDb(IOptions<FillDbOptions> options,
             UserManager<User> userManager, RoleManager<Role> roleManager,
             ILogger<FillDb> logger)
         {
-            this.context = context;
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.logger = logger;
@@ -71,14 +66,20 @@ namespace ProjectSIP.Services.Configure
             }
 
             var user = await userManager.FindByEmailAsync(options.Email);
-            if ((await userManager.GetRolesAsync(user)).Count != 0)
+            if (!await userManager.IsInRoleAsync(user, RolesConstants.admin))
             {
-                logger.LogInformation("Default user has some roles");
-                return;
+                var adminRole = await userManager.AddToRoleAsync(user, RolesConstants.admin);
+                logger.LogDebug($"Result of addting user %{user.Email}% to role %{RolesConstants.admin}% is %{adminRole}%");
             }
-
-            var result = await userManager.AddToRoleAsync(user, RolesConstants.admin);
-            logger.LogDebug($"Result of addting user %{user.Email}% to role %{RolesConstants.admin}% is %{result}%");
+            else
+                logger.LogInformation($"User %{user.Email}% already has role %{RolesConstants.admin}%");
+            if (!await userManager.IsInRoleAsync(user, RolesConstants.user))
+            {
+                var userRole = await userManager.AddToRoleAsync(user, RolesConstants.user);
+                logger.LogDebug($"Result of addting user %{user.Email}% to role %{RolesConstants.user}% is %{userRole}%");
+            }
+            else
+                logger.LogInformation($"User %{user.Email}% already has role %{RolesConstants.user}%");
         }
 
         private async Task AddRoles()

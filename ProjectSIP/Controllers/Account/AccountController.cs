@@ -1,10 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProjectSIP.Exceptions;
 using ProjectSIP.Models.Identity;
 using ProjectSIP.Models.Responses.Identity;
+using ProjectSIP.Services.Configure;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProjectSIP.Controllers.Account
@@ -13,10 +20,15 @@ namespace ProjectSIP.Controllers.Account
     public class AccountController : MainController
     {
         private readonly ILogger<AccountController> logger;
+        private readonly IMapper mapper;
+        private readonly RoleManager<Role> roleManager;
 
-        public AccountController(UserManager<User> userManager, ILogger<AccountController> logger) : base (userManager)
+        public AccountController(UserManager<User> userManager, ILogger<AccountController> logger,
+            IMapper mapper, RoleManager<Role> roleManager) : base (userManager)
         {
             this.logger = logger;
+            this.mapper = mapper;
+            this.roleManager = roleManager;
         }
 
         [HttpGet("{userId:int}")]
@@ -33,5 +45,38 @@ namespace ProjectSIP.Controllers.Account
                 throw new CantFindUserException();
             }
         }
+
+        [HttpGet("users")]
+        [Authorize(Roles = RolesConstants.admin)]
+        public async Task<ActionResult<IEnumerable<UserRoleView>>> GetAllUsers()
+        {
+            List<UserRoleView> userRoleViews = new List<UserRoleView>();
+
+            var users = await userManager.Users.ToListAsync();
+
+            foreach (var user in users)
+            {
+                var roles = (await userManager.GetRolesAsync(user)).ToList();
+                userRoleViews.Add(new UserRoleView
+                {
+                    User = mapper.Map<UserView>(user),
+                    Roles = roles
+                });
+            }
+            return Ok(userRoleViews);
+        }
+
+        [HttpGet("myroles")]
+        public async Task<ActionResult<IEnumerable<string>>> GetCurrentUserRoles()
+            => (await userManager.GetRolesAsync(
+                    await GetCurrentUser()))
+                .ToList();
+
+        [HttpGet("roles")]
+        [Authorize(Roles = RolesConstants.admin)]
+        public async Task<ActionResult<IEnumerable<RoleView>>> GetAllRoles()
+            => await roleManager.Roles
+            .ProjectTo<RoleView>(mapper.ConfigurationProvider)
+            .ToListAsync();
     }
 }
