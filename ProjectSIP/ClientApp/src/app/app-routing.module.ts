@@ -13,20 +13,22 @@ import { DocsDetailComponent } from './main/docs-detail/docs-detail.component';
 import { AdminComponent } from './main/admin/admin.component';
 import { RegisterComponent } from './main/admin/register/register.component';
 import { AccountComponent } from './main/account/account.component';
+import { ManageUsersComponent } from './main/admin/manage-users/manage-users.component';
 
 
 const routes: Routes = [
   { path: '', component: AppComponent },
   { path: 'auth', component: AuthComponent },
   { path: 'main', component: MainComponent, children: [
-    { path: '', component: DocsComponent },
     { path: 'docs', component: DocsComponent, children: [
       { path: 'detail/:doc', component: DocsDetailComponent }
     ] },
     { path: 'messages', component: MessagesComponent },
     { path: 'help', component: HelpComponent },
     { path: 'admin', component: AdminComponent, children: [
-      { path: 'register', component: RegisterComponent}
+      { path: 'register', component: RegisterComponent },
+      { path: 'users', component: ManageUsersComponent },
+      { path: '', component: ManageUsersComponent, pathMatch: 'full' }
     ] },
     { path: 'account', component: AccountComponent }
   ] },

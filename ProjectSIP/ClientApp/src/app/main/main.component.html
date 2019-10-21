@@ -6,7 +6,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="main/docs">Документы</a>
+                <a class="nav-link" href="main/docs" *ngIf="!isAdmin">Документы</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="main/messages">Сообщения</a>
