@@ -14,6 +14,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="main/help">Справочная</a>
             </li>
+            <li class="nav-item" *ngIf="isAdmin">
+                <a class="nav-link text-info" href="main/admin">Админка</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-primary" href="main/account">{{Email}}</a>
+            </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Поиск..." aria-label="Search">

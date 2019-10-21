@@ -24,9 +24,8 @@ export class AuthComponent implements OnInit {
   async onSubmit(loginData) {
     try {
       const response = await this.authService.apiAuthLoginPost$Json$Response({body: loginData}).toPromise();
-      console.log('User tried to logged: ' + response.status);
-      console.log('User\'s token: ' + response.body.accessToken);
       localStorage.setItem('token', response.body.accessToken);
+      localStorage.setItem('currentUserId', response.body.user.id.toString());
       this.router.navigate(['main']);
     } catch (ex) {
       console.error(ex);
