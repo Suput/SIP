@@ -146,6 +146,8 @@ namespace ProjectSIP
             {
                 app.UseSpaStaticFiles();
             }
+            app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseRouting();
             app.UseEndpoints(endpoints =>

@@ -22,6 +22,7 @@ import { DocsDetailComponent } from './main/docs-detail/docs-detail.component';
 import { RegisterComponent } from './main/admin/register/register.component';
 import { AdminComponent } from './main/admin/admin.component';
 import { AccountComponent } from './main/account/account.component';
+import { ManageUsersComponent } from './main/admin/manage-users/manage-users.component';
 
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
@@ -44,7 +45,8 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     DocsDetailComponent,
     RegisterComponent,
     AdminComponent,
-    AccountComponent
+    AccountComponent,
+    ManageUsersComponent
   ],
   imports: [
     BrowserModule,
