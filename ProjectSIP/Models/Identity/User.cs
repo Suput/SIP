@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using ProjectSIP.Models.Document;
+using ProjectSIP.Models.Documents;
 using System.Collections.Generic;
 
 namespace ProjectSIP.Models.Identity
@@ -12,7 +12,11 @@ namespace ProjectSIP.Models.Identity
         public string Position { get; set; } // Employee
         public int Age { get; set; }
 
-        public List<From> Froms { get; set; }
-        public List<To> Tos { get; set; }
+        #region Events
+        public List<EventDocument> EventMainAccounts { get; set; }
+        public List<EventDocument> EventSupervisors { get; set; }
+        public List<EventDocument> EventOrganizators { get; set; }
+
+        #endregion
     }
 }

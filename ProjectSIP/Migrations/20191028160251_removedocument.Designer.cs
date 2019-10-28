@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProjectSIP.Data;
@@ -9,9 +10,10 @@ using ProjectSIP.Data;
 namespace ProjectSIP.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20191028160251_removedocument")]
+    partial class removedocument
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,78 +120,6 @@ namespace ProjectSIP.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("ProjectSIP.Models.Documents.EventDocument", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("DivisionName")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("EventStart")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Fullname")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LawNumber")
-                        .HasColumnType("text");
-
-                    b.Property<int>("MainAccountantId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NecessariesFromDivision")
-                        .HasColumnType("text");
-
-                    b.Property<string>("OrganizationName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("OrganizatorId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SpendMoney")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SupervisorId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("SupervisorSigniture")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Targets")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MainAccountantId");
-
-                    b.HasIndex("OrganizatorId");
-
-                    b.HasIndex("SupervisorId");
-
-                    b.ToTable("EventDocuments");
-                });
-
-            modelBuilder.Entity("ProjectSIP.Models.Documents.UserEventDocument", b =>
-                {
-                    b.Property<int>("EventDocumentId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("EventDocumentId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserEventDocument");
                 });
 
             modelBuilder.Entity("ProjectSIP.Models.Identity.Role", b =>
@@ -346,42 +276,6 @@ namespace ProjectSIP.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.HasOne("ProjectSIP.Models.Identity.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ProjectSIP.Models.Documents.EventDocument", b =>
-                {
-                    b.HasOne("ProjectSIP.Models.Identity.User", "MainAccountant")
-                        .WithMany("EventMainAccounts")
-                        .HasForeignKey("MainAccountantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProjectSIP.Models.Identity.User", "Organizator")
-                        .WithMany("EventOrganizators")
-                        .HasForeignKey("OrganizatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProjectSIP.Models.Identity.User", "Supervisor")
-                        .WithMany("EventSupervisors")
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ProjectSIP.Models.Documents.UserEventDocument", b =>
-                {
-                    b.HasOne("ProjectSIP.Models.Documents.EventDocument", "EventDocument")
-                        .WithMany("UserEventDocuments")
-                        .HasForeignKey("EventDocumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProjectSIP.Models.Identity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
