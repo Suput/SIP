@@ -36,7 +36,7 @@ namespace ProjectSIP.Controllers.Account
         {
             try
             {
-                return Ok(await userManager.FindByIdAsync(userId.ToString()));
+                return Ok(mapper.Map<UserView>(await userManager.FindByIdAsync(userId.ToString())));
             }
             catch(Exception ex)
             {

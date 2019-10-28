@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="card">
+    <div class="card" *ngIf="doc">
         <div class="card-body">
             <h4 class="card-title">{{doc.title}}</h4>
             <p>Номер документа: <strong>{{doc.documentNumber}}</strong></p>
@@ -7,7 +7,6 @@
             <p>Дата подписания: {{doc.signtureDate}}</p>
             <p *ngIf="doc.periodStart && doc.periodEnd">Даты проведения: </p>
             <p *ngIf="doc.periodStart && doc.periodEnd">С {{doc.periodStart}} по {{doc.periodEnd}}</p>
-            <button class="btn btn-info" (click)="LoadDetail(doc.id)">Подробнее</button>
         </div>
     </div>
 </div>
