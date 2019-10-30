@@ -16,7 +16,7 @@ namespace ProjectSIP.Models.Identity
         public List<EventDocument> EventMainAccounts { get; set; }
         public List<EventDocument> EventSupervisors { get; set; }
         public List<EventDocument> EventOrganizators { get; set; }
-
+        public List<UserEventDocument> UserEventDocuments { get; set; }
         #endregion
     }
 }

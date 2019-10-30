@@ -6,7 +6,7 @@ using ProjectSIP.Models.Identity;
 
 namespace ProjectSIP.Data
 {
-    public class DatabaseContext : IdentityDbContext<User,Role,int>
+    public class DatabaseContext : IdentityDbContext<User, Role, int>
     {
         public DbSet<EventDocument> EventDocuments { get; set; }
 
@@ -27,6 +27,14 @@ namespace ProjectSIP.Data
             builder.Entity<UserEventDocument>(cfg =>
             {
                 cfg.HasKey(ued => new { ued.EventDocumentId, ued.UserId });
+
+                cfg.HasOne(ued => ued.EventDocument)
+                    .WithMany(ed => ed.UserEventDocuments)
+                    .HasForeignKey(ued => ued.EventDocumentId);
+
+                cfg.HasOne(ued => ued.User)
+                    .WithMany(u => u.UserEventDocuments)
+                    .HasForeignKey(ued => ued.UserId);
             });
         }
 
