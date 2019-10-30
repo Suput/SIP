@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProjectSIP.Data;
 using ProjectSIP.Exceptions;
 using ProjectSIP.Models.Documents;
 using ProjectSIP.Models.Identity;
 using ProjectSIP.Models.Requests.Documents;
+using ProjectSIP.Models.Responses.Documents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,5 +79,18 @@ namespace ProjectSIP.Controllers.Documents
                 throw new CantSaveDatabaseException();
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<EventDocumentView>>> GetAllEventDocuments()
+            => await context.EventDocuments
+                .ProjectTo<EventDocumentView>(mapper.ConfigurationProvider)
+                .ToListAsync();
+
+        [HttpGet("{docId:int}")]
+        public async Task<ActionResult<EventDocumentView>> GetEventDocument(int docId)
+            => await context.EventDocuments
+                .Where(ed => ed.Id == docId)
+                .ProjectTo<EventDocumentView>(mapper.ConfigurationProvider)
+                .SingleAsync();
     }
 }
