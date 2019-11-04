@@ -18,11 +18,14 @@ import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
 import { DocsService } from './main/docs/docs.service';
 import { ConflictComponent } from './conflict/conflict.component';
-import { DocsDetailComponent } from './main/docs-detail/docs-detail.component';
 import { RegisterComponent } from './main/admin/register/register.component';
 import { AdminComponent } from './main/admin/admin.component';
 import { AccountComponent } from './main/account/account.component';
 import { ManageUsersComponent } from './main/admin/manage-users/manage-users.component';
+import { EventsComponent } from './main/docs/events/events.component';
+import { BuysComponent } from './main/docs/buys/buys.component';
+import { SackComponent } from './main/docs/sack/sack.component';
+import { EventsDetailComponent } from './main/docs/events/events-detail/events-detail.component';
 
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
@@ -42,11 +45,14 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     NotfoundComponent,
     NotauthComponent,
     ConflictComponent,
-    DocsDetailComponent,
     RegisterComponent,
     AdminComponent,
     AccountComponent,
-    ManageUsersComponent
+    ManageUsersComponent,
+    EventsComponent,
+    BuysComponent,
+    SackComponent,
+    EventsDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,26 @@
+<div *ngFor="let doc of EventDocs" class="card">
+    <div class="card-body">
+        <h4 class="card-title">
+            {{doc.name}}
+        </h4>
+        <div class="form-group">
+            <label for="LawNumber">Номер приказа:</label>
+            <h5 id="LawNumber">
+                {{doc.lawNumber}}
+            </h5>
+        </div>
+        <div class="form-group">
+            <label for="Division">Отдел:</label>
+            <h5 id="Division">
+                {{doc.divisionName}}
+            </h5>
+        </div>
+        <div class="form-group">
+            <label for="StartTime">Начало:</label>
+            <h5 id="StartTime">
+                {{doc.eventStart}}
+            </h5>
+        </div>
+        <button class="btn btn-info" (click)="LoadDetail(doc.id)">Подробнее</button>
+    </div>
+</div>
