@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -69,14 +69,14 @@ namespace ProjectSIP.Services.Configure
             if (!await userManager.IsInRoleAsync(user, RolesConstants.admin))
             {
                 var adminRole = await userManager.AddToRoleAsync(user, RolesConstants.admin);
-                logger.LogDebug($"Result of addting user %{user.Email}% to role %{RolesConstants.admin}% is %{adminRole}%");
+                logger.LogWarning($"Result of addting user %{user.Email}% to role %{RolesConstants.admin}% is %{adminRole}%");
             }
             else
                 logger.LogInformation($"User %{user.Email}% already has role %{RolesConstants.admin}%");
             if (!await userManager.IsInRoleAsync(user, RolesConstants.user))
             {
                 var userRole = await userManager.AddToRoleAsync(user, RolesConstants.user);
-                logger.LogDebug($"Result of addting user %{user.Email}% to role %{RolesConstants.user}% is %{userRole}%");
+                logger.LogWarning($"Result of addting user %{user.Email}% to role %{RolesConstants.user}% is %{userRole}%");
             }
             else
                 logger.LogInformation($"User %{user.Email}% already has role %{RolesConstants.user}%");
@@ -101,7 +101,7 @@ namespace ProjectSIP.Services.Configure
                 {
                     Name = RolesConstants.user
                 });
-            logger.LogDebug($"Result of creating roles: %{RolesConstants.admin}% - %{admin}%, %{RolesConstants.user}% - %{user}%");
+            logger.LogWarning($"Result of creating roles: %{RolesConstants.admin}% - %{admin}%, %{RolesConstants.user}% - %{user}%");
         }
 
         private async Task AddDefaultUser()
@@ -117,11 +117,12 @@ namespace ProjectSIP.Services.Configure
                 Firstname = options.Firstname,
                 Secondname = options.Secondname,
                 Middlename = options.Middlename,
+		        Email = options.Email,
                 Age = options.Age,
                 UserName = options.Email,
                 Position = options.Position
             }, options.Password);
-            logger.LogDebug($"Result of creating default user %{options.Email}% is %{result}%");
+            logger.LogWarning($"Result of creating default user %{options.Email}% is %{result}%");
         }
     }
 }

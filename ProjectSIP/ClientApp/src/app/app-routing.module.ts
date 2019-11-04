@@ -20,9 +20,8 @@ const routes: Routes = [
   { path: '', component: AppComponent },
   { path: 'auth', component: AuthComponent },
   { path: 'main', component: MainComponent, children: [
-    { path: 'docs', component: DocsComponent, children: [
-      { path: 'detail/:doc', component: DocsDetailComponent }
-    ] },
+    { path: 'docs', component: DocsComponent },
+    { path: 'docs/:doc', component: DocsDetailComponent },
     { path: 'messages', component: MessagesComponent },
     { path: 'help', component: HelpComponent },
     { path: 'admin', component: AdminComponent, children: [

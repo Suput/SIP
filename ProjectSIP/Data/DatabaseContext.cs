@@ -1,63 +1,60 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ProjectSIP.Models.Document;
+using ProjectSIP.Models.Documents;
 using ProjectSIP.Models.Identity;
 
 namespace ProjectSIP.Data
 {
-    public class DatabaseContext : IdentityDbContext<User,Role,int>
+    public class DatabaseContext : IdentityDbContext<User, Role, int>
     {
-        public DbSet<Document> Documents { get; set; }
-        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base (options) { }
+        public DbSet<EventDocument> EventDocuments { get; set; }
+
+        public DatabaseContext(DbContextOptions<DatabaseContext> options)
+            : base (options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             // my functions for configuration
-            ConfigureDocument(builder);
-            ConfigureFrom(builder);
-            ConfigureTo(builder);
+            ConfigureEventDocument(builder);
+            ConfigureUserEventDocument(builder);
         }
 
-        private void ConfigureTo(ModelBuilder builder)
+        private void ConfigureUserEventDocument(ModelBuilder builder)
         {
-            builder.Entity<To>(opt =>
+            builder.Entity<UserEventDocument>(cfg =>
             {
-                opt.HasKey(to => to.Id);
+                cfg.HasKey(ued => new { ued.EventDocumentId, ued.UserId });
 
-                opt.HasOne(to => to.User)
-                    .WithMany(u => u.Tos)
-                    .HasForeignKey(to => to.UserId);
+                cfg.HasOne(ued => ued.EventDocument)
+                    .WithMany(ed => ed.UserEventDocuments)
+                    .HasForeignKey(ued => ued.EventDocumentId);
+
+                cfg.HasOne(ued => ued.User)
+                    .WithMany(u => u.UserEventDocuments)
+                    .HasForeignKey(ued => ued.UserId);
             });
         }
 
-        private void ConfigureFrom(ModelBuilder builder)
+        private void ConfigureEventDocument(ModelBuilder builder)
         {
-            builder.Entity<From>(opt =>
+            builder.Entity<EventDocument>(cfg =>
             {
-                opt.HasKey(from => from.Id);
+                cfg.HasKey(ed => ed.Id);
 
-                opt.HasOne(from => from.User)
-                    .WithMany(u => u.Froms)
-                    .HasForeignKey(from => from.UserId);
-            });
-        }
+                cfg.HasOne(ed => ed.MainAccountant)
+                    .WithMany(u => u.EventMainAccounts)
+                    .HasForeignKey(ed => ed.MainAccountantId);
 
-        private void ConfigureDocument(ModelBuilder builder)
-        {
-            builder.Entity<Document>(opt =>
-            {
-                opt.HasKey(doc => doc.Id);
+                cfg.HasOne(ed => ed.Supervisor)
+                    .WithMany(u => u.EventSupervisors)
+                    .HasForeignKey(ed => ed.SupervisorId);
 
-                opt.HasOne(doc => doc.From)
-                    .WithMany(from => from.Documents)
-                    .HasForeignKey(doc => doc.FromId);
-
-                opt.HasOne(doc => doc.To)
-                    .WithMany(to => to.Documents)
-                    .HasForeignKey(doc => doc.ToId);
+                cfg.HasOne(ed => ed.Organizator)
+                    .WithMany(u => u.EventOrganizators)
+                    .HasForeignKey(ed => ed.OrganizatorId);
             });
         }
     }

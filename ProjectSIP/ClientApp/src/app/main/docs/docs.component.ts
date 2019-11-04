@@ -19,6 +19,6 @@ export class DocsComponent implements OnInit {
 
   LoadDetail(doc: number) {
     console.log(doc);
-    this.router.navigate(['main/docs/detail', doc]);
+    this.router.navigate(['main/docs', doc]);
   }
 }
