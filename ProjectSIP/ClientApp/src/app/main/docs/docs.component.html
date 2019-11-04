@@ -1,13 +1,14 @@
-<div class="container">
-    <div class="card" *ngFor="let doc of docs">
-        <div class="card-body">
-            <h4 class="card-title">{{doc.title}}</h4>
-            <p>Номер документа: <strong>{{doc.documentNumber}}</strong></p>
-            <p>Дата создания: {{doc.creationDate}}</p>
-            <p>Дата подписания: {{doc.signtureDate}}</p>
-            <p *ngIf="doc.periodStart && doc.periodEnd">Даты проведения: </p>
-            <p *ngIf="doc.periodStart && doc.periodEnd">С {{doc.periodStart}} по {{doc.periodEnd}}</p>
-            <button class="btn btn-info" (click)="LoadDetail(doc.id)">Подробнее</button>
-        </div>
-    </div>
+<div class="main">
+    <ul class="nav nav-tabs justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" href="main/docs/events">Мероприятия</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="main/docs/buys">Закупочный акт</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="main/docs/sack">Увольнение</a>
+        </li>
+    </ul>
+    <router-outlet></router-outlet>
 </div>
