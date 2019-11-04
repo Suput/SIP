@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DocumentView } from '../../api/models';
-import { DocsService } from './docs.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,15 +8,8 @@ import { Router } from '@angular/router';
 })
 export class DocsComponent implements OnInit {
 
-  public docs: DocumentView[];
-  constructor(private docsService: DocsService, private router: Router) { }
+  constructor(private router: Router) { }
 
-  async ngOnInit() {
-    this.docs = await this.docsService.GetDocuments(true);
-  }
-
-  LoadDetail(doc: number) {
-    console.log(doc);
-    this.router.navigate(['main/docs', doc]);
+  ngOnInit() {
   }
 }
