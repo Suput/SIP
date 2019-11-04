@@ -1,42 +1,41 @@
-<div class="container" *ngIf="User">
-    <div class="form-group">
-        <label for="Email">Почта:</label>
-        <h5 id="Email">
+<div *ngIf="User" class="container card">
+    <div class="card-body">
+        <h4 id="Email" class="card-title">
             {{User.email}}
-        </h5>
-    </div>
-    <div class="form-group">
-        <label for="Secondname">Фамилия:</label>
-        <h5 id="Secondname">
-            {{User.secondname}}
-        </h5>
-    </div>
-    <div class="form-group">
-        <label for="Firstname">Имя:</label>
-        <h5 id="Firstname">
-            {{User.firstname}}
-        </h5>
-    </div>
-    <div class="form-group">
-        <label for="Middlename">Отчество:</label>
-        <h5 id="Middlename">
-            {{User.middlename}}
-        </h5>
-    </div>
-    <div class="form-group">
-        <label for="Age">Возраст:</label>
-        <h5 id="Age">
-            {{User.age}}
-        </h5>
-    </div>
-    <div class="form-group">
-        <label for="Position">Должность:</label>
-        <h5 id="Position">
-            {{User.position}}
-        </h5>
-    </div>
-    <button type="button" class="btn btn-outline-danger" (click)=Exit()>Выход из аккаунта</button>
-    <div class="alert alert-info marginTop" role="alert" *ngIf="Exited">
-        Вы вышли из аккаунта
+        </h4>
+        <div class="form-group">
+            <label for="Secondname">Фамилия:</label>
+            <h5 id="Secondname">
+                {{User.secondname}}
+            </h5>
+        </div>
+        <div class="form-group">
+            <label for="Firstname">Имя:</label>
+            <h5 id="Firstname">
+                {{User.firstname}}
+            </h5>
+        </div>
+        <div class="form-group">
+            <label for="Middlename">Отчество:</label>
+            <h5 id="Middlename">
+                {{User.middlename}}
+            </h5>
+        </div>
+        <div class="form-group">
+            <label for="Age">Возраст:</label>
+            <h5 id="Age">
+                {{User.age}}
+            </h5>
+        </div>
+        <div class="form-group">
+            <label for="Position">Должность:</label>
+            <h5 id="Position" class="text-primary">
+                {{User.position}}
+            </h5>
+        </div>
+        <button type="button" class="btn btn-outline-danger" (click)=Exit()>Выход из аккаунта</button>
+        <div class="alert alert-info marginTop" role="alert" *ngIf="Exited">
+            Вы вышли из аккаунта
+        </div>
     </div>
 </div>

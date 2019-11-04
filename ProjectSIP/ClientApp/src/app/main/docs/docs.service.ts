@@ -21,7 +21,8 @@ export class DocsService {
         doc.periodEnd = this.datePipe.transform(doc.periodEnd, 'dd.MM.yyyy HH:mm');
       });
       return this.documents;
+    } else {
+      return this.documents;
     }
-    return this.documents;
   }
 }
