@@ -12,9 +12,4 @@ export class CreateEventDocComponent implements OnInit {
   ngOnInit() {
   }
 
-  OnInput() {
-    const element = document.getElementById('eventName');
-    this.Name = element.value;
-  }
-
 }
