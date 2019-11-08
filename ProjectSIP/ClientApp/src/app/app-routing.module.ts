@@ -17,6 +17,7 @@ import { EventsComponent } from './main/docs/events/events.component';
 import { BuysComponent } from './main/docs/buys/buys.component';
 import { SackComponent } from './main/docs/sack/sack.component';
 import { EventsDetailComponent } from './main/docs/events/events-detail/events-detail.component';
+import { CreateEventDocComponent } from './main/docs/events/create-event-doc/create-event-doc.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'main', component: MainComponent, children: [
     { path: 'docs', component: DocsComponent, children: [
       { path: 'events', component: EventsComponent },
+      { path: 'events/create', component: CreateEventDocComponent },
       { path: 'events/:docId', component: EventsDetailComponent },
       { path: 'buys', component: BuysComponent },
       { path: 'buys/:docId', component: BuysComponent },

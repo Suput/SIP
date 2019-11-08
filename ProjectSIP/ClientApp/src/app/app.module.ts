@@ -26,6 +26,7 @@ import { EventsComponent } from './main/docs/events/events.component';
 import { BuysComponent } from './main/docs/buys/buys.component';
 import { SackComponent } from './main/docs/sack/sack.component';
 import { EventsDetailComponent } from './main/docs/events/events-detail/events-detail.component';
+import { CreateEventDocComponent } from './main/docs/events/create-event-doc/create-event-doc.component';
 
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
@@ -52,7 +53,8 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
     EventsComponent,
     BuysComponent,
     SackComponent,
-    EventsDetailComponent
+    EventsDetailComponent,
+    CreateEventDocComponent
   ],
   imports: [
     BrowserModule,

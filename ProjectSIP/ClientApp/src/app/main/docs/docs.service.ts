@@ -12,7 +12,7 @@ export class DocsService {
   constructor(private eventDocsService: EventDocumentService, private datePipe: DatePipe) { }
 
   async GetEventDocs(refresh: boolean): Promise<EventDocumentView[]> {
-    if (refresh || this.EventDocs.length === 0) {
+    if (refresh || (this.EventDocs !== undefined && this.EventDocs.length === 0)) {
       this.EventDocs = await this.eventDocsService.apiEventdocsGet().toPromise();
       this.EventDocs.forEach(doc => {
         doc.eventStart = this.datePipe.transform(doc.eventStart, 'dd.MM.yyyy HH:mm');
