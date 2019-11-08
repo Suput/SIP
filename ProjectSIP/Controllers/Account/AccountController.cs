@@ -52,7 +52,6 @@ namespace ProjectSIP.Controllers.Account
             return await userManager.Users
                 .Where(u => u.Secondname.Contains(search) || u.Firstname.Contains(search) || u.Middlename.Contains(search))
                 .ProjectTo<UserView>(mapper.ConfigurationProvider)
-                .Take(5)
                 .ToListAsync();
         }
 
