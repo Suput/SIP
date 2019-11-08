@@ -20,4 +20,9 @@ export class EventsComponent implements OnInit {
     console.log(docId);
     this.router.navigate(['main/docs/events', docId]);
   }
+
+  CreateEventDocument() {
+    console.log('Create event document');
+    this.router.navigate(['main/docs/events/create']);
+  }
 }

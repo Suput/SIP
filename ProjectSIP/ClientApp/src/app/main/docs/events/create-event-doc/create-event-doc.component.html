@@ -1,0 +1,129 @@
+<div class="container">
+    <h2><u><b>Создание документа о проведении мероприятия</b></u></h2>
+    <form [formGroup]="createForm" (ngSubmit)="onSubmit(createForm.value)">
+        <div style="text-align: right;">
+            <!-- <h5>{{doc.organizationName}}</h5> -->
+            <input type="text" placeholder="Название организации" required
+                formControlName="organizationName">
+            <h6>наименование организации</h6>
+            <h6 class="d-inline">ПРИКАЗ #</h6>
+            <!-- <h6 class="d-inline"> {{doc.lawNumber}}</h6> -->
+            <input type="text" class="d-inline" placeholder="Номер приказа" required
+                formControlName="lawNumber">
+            <br>
+            <h6 class="d-inline">О проведении</h6>
+            <!-- <h6 class="d-inline"> {{doc.name}} </h6> -->
+            <input id="eventName" type="text" class="d-inline" placeholder="Название мероприятия" name="Name" [(ngModel)]="Name" required
+                formControlName="name">
+            <br>
+            <h6 class="d-inline">В целях:</h6>
+            <!-- <h6 class="d-inline"> {{doc.targets}}</h6> -->
+            <input type="text" class="d-inline" placeholder="Цели мероприятия" required
+                formControlName="targets">
+            <br>
+        </div>
+        <h6 align="center">ПРИЗЫВАЮ:</h6>
+        <!--1 -->
+        <h6 class="d-inline">1. Провести</h6>
+        <!-- <h6 class="d-inline"> {{doc.eventStart}} </h6> -->
+        <input type="datetime-local" class="d-inline" required 
+            formControlName="eventStart">
+        <h6 class="d-inline">г.</h6>
+        <!-- <h6 class="d-inline"> {{doc.fullname}}</h6> -->
+        <input type="text" class="d-inline" placeholder="Полное название мероприятия" required
+            formControlName="fullname">
+        <br>
+        <!--3 -->
+        <h6 class="d-inline">2. Утвердить смету представительских расходов на проведение</h6>
+        <h6 class="d-inline"> {{Name}} </h6>
+        <h6 class="d-inline">в размере</h6>
+        <!-- <h6 class="d-inline"> {{doc.spendMoney}} </h6> -->
+        <input type="number" class="d-inline" required
+            formControlName="spendMoney">
+        <h6 class="d-inline">рублей.</h6><br>
+        <!--4 -->
+        <h6 class="d-inline">3. Главному бухгалтеру</h6>
+        <select class="custom-select" formControlName="mainAccountantId">
+            <option *ngFor="let user of allUsers" value="{{user.id}}">
+                {{user.secondname}} {{user.firstname[0]}}.{{user.middlename[0]}}.
+            </option>
+        </select>
+        <!-- <h6 class="d-inline"> {{doc.mainAccountant.secondname}} {{doc.mainAccountant.firstname[0]}}.{{doc.mainAccountant.middlename[0]}}. </h6> -->
+        <h6 class="d-inline">выделить денежные средства в размере, установленном сметой представительских расходов, и представить отчет о
+    представительских расходах по проведенному мероприятию с подтверждением их
+    соответствующими первичными документами.</h6><br>
+        <!--5 -->
+        <h6 class="d-inline">4. Утвердить список работников организации для участия в</h6>
+        <h6 class="d-inline"> {{Name}}</h6>
+        <br>
+        <select class="custom-select" id="select1" (change)="select1($event)">
+            <option value="-1"></option>
+            <option *ngFor="let user of allUsers" value="{{user.id}}">
+                {{user.secondname}} {{user.firstname[0]}}.{{user.middlename[0]}}.
+            </option>
+        </select>
+        <select class="custom-select" id="select2" (change)="select2($event)">
+            <option value="-1"></option>
+            <option *ngFor="let user of allUsers" value="{{user.id}}">
+                {{user.secondname}} {{user.firstname[0]}}.{{user.middlename[0]}}.
+            </option>
+        </select>
+        <select class="custom-select" id="select3" (change)="select3($event)">
+            <option value="-1"></option>
+            <option *ngFor="let user of allUsers" value="{{user.id}}">
+                {{user.secondname}} {{user.firstname[0]}}.{{user.middlename[0]}}.
+            </option>
+        </select>
+        <select class="custom-select" id="select4" (change)="select4($event)">
+            <option value="-1"></option>
+            <option *ngFor="let user of allUsers" value="{{user.id}}">
+                {{user.secondname}} {{user.firstname[0]}}.{{user.middlename[0]}}.
+            </option>
+        </select>
+        <!-- <div *ngFor="let user of doc.userEventDocuments">
+            <h6 class="d-inline"> - </h6>
+            <h6 class="d-inline">{{user.user.secondname}} {{user.user.firstname[0]}}.{{user.user.middlename[0]}}.</h6>
+            <br>    
+        </div> -->
+        <!--6 -->
+        <h6 class="d-inline">5. Руководителю</h6>
+        <select class="custom-select" formControlName="supervisorId">
+            <option *ngFor="let user of allUsers" value="{{user.id}}">
+                {{user.secondname}} {{user.firstname[0]}}.{{user.middlename[0]}}.
+            </option>
+        </select>
+        <!-- <h6 class="d-inline"> {{doc.supervisor.secondname}} {{doc.supervisor.firstname[0]}}.{{doc.supervisor.middlename[0]}}. </h6> -->
+        
+        <h6 class="d-inline">отдела</h6>
+        <!-- <h6 class="d-inline"> {{doc.divisionName}} </h6> -->
+        <input type="text" class="d-inline" placeholder="Название отдела" required
+            formControlName="divisionName">
+        <h6 class="d-inline">обеспечить</h6>
+        <!-- <i class="d-inline"> {{doc.necessariesFromDivision}} </i> -->
+        <input type="text" class="d-inline" placeholder="Что нужно от отдела" required
+            formControlName="necessariesFromDivision">
+        <h6 class="d-inline">во время проведения мероприятия.</h6><br>
+        <!--7 -->
+        <h6 class="d-inline">6. Контроль за исполнением настоящего приказа возложить на</h6>
+        <select class="custom-select" formControlName="organizatorId">
+            <option *ngFor="let user of allUsers" value="{{user.id}}">
+                {{user.secondname}} {{user.firstname[0]}}.{{user.middlename[0]}}.
+            </option>
+        </select>
+        <!-- <h6 class="d-inline"> {{doc.organizator.secondname}} {{doc.organizator.firstname[0]}}.{{doc.organizator.middlename[0]}}.</h6><br> -->
+        <br>
+        <!--next -->
+        <div style="margin-top: 5vh; margin-bottom: 5vh;">
+            <h6 class="d-inline">С приказом ознакомлен:</h6>
+            <!-- <pre class="d-inline"> {{doc.supervisorSigniture}} </pre> -->
+            <input type="text" class="d-inline" placeholder="Ваша подпись" required
+                formControlName="supervisorSigniture">
+            <h6 class="d-inline">Подпись</h6>
+        </div>
+        
+        <button type="submit" class="btn btn-success">Создать</button>
+    </form>
+    <div class="alert alert-info" role="alert" *ngIf="isCreated">
+        Документ о проведении мероприятия был успешно создан!
+    </div>
+</div>

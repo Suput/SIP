@@ -46,9 +46,18 @@ namespace ProjectSIP.Controllers.Account
             }
         }
 
+        [HttpGet("allusers")]
+        public async Task<ActionResult<IEnumerable<UserView>>> GetAllUsers(string search = "")
+        {
+            return await userManager.Users
+                .Where(u => u.Secondname.Contains(search) || u.Firstname.Contains(search) || u.Middlename.Contains(search))
+                .ProjectTo<UserView>(mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
+
         [HttpGet("users")]
         [Authorize(Roles = RolesConstants.admin)]
-        public async Task<ActionResult<IEnumerable<UserRoleView>>> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<UserRoleView>>> GetAllUsersWithRoles()
         {
             List<UserRoleView> userRoleViews = new List<UserRoleView>();
 
