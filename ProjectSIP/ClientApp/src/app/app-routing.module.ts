@@ -18,6 +18,7 @@ import { BuysComponent } from './main/docs/buys/buys.component';
 import { SackComponent } from './main/docs/sack/sack.component';
 import { EventsDetailComponent } from './main/docs/events/events-detail/events-detail.component';
 import { CreateEventDocComponent } from './main/docs/events/create-event-doc/create-event-doc.component';
+import { NoAccessComponent } from './no-access/no-access.component';
 
 
 const routes: Routes = [
@@ -46,6 +47,7 @@ const routes: Routes = [
   ] },
   { path: 'notfound', component: NotfoundComponent },
   { path: 'notauth', component: NotauthComponent },
+  { path: 'noaccess', component: NoAccessComponent },
   { path: 'conflict/:error', component: ConflictComponent },
   { path: '**', component: NotfoundComponent}
 ];
