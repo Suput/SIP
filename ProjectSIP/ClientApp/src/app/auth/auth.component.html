@@ -1,8 +1,9 @@
 <div class="container">
-    <form [formGroup]="authForm" (ngSubmit)="onSubmit(authForm.value)">
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit(authForm.value)" ngNativeValidate>
         <div class="form-group">
             <label for="Email">Почта</label>
             <input type="email"
+                required
                 autofocus
                 class="form-control"
                 id="Email"
@@ -12,6 +13,8 @@
         <div class="form-group">
             <label for="Password">Пароль</label>
             <input type="password"
+                required
+                minlength="6"
                 class="form-control"
                 id="Password"
                 placeholder="SuperHardPassword"
