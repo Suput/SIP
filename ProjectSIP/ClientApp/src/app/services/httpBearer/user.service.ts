@@ -47,6 +47,11 @@ export class UserService {
 
   IsAuthorizated(): boolean {
     if (localStorage.getItem('token')) {
+      const jwt = this.parseJwt(localStorage.getItem('token'));
+      const jwtTime = jwt.exp;
+      if (Date.now() > jwtTime * 1000) {
+        return false;
+      }
       return true;
     }
     return false;
@@ -54,5 +59,14 @@ export class UserService {
 
   async GetUserModel(): Promise<UserView> {
     return await this.accountService.apiAccountUserIdGet({userId: +localStorage.getItem('currentUserId')}).toPromise();
-   }
+  }
+
+  parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+  }
 }
