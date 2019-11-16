@@ -26,6 +26,9 @@ export class ApiInterceptor implements HttpInterceptor {
         if (err.status === 401) {
           this.router.navigate(['notauth']);
         }
+        if (err.status === 403) {
+          this.router.navigate(['noaccess']);
+        }
         if (err.status === 409) {
           this.router.navigate(['conflict', err.error]);
         }

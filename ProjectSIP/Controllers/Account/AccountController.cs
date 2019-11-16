@@ -87,5 +87,30 @@ namespace ProjectSIP.Controllers.Account
             => await roleManager.Roles
             .ProjectTo<RoleView>(mapper.ConfigurationProvider)
             .ToListAsync();
+
+        [HttpDelete("{userId:int}")]
+        public async Task<ActionResult<int>> DeleteUserAsync(int userId)
+        {
+            try
+            {
+                var user = await userManager.FindByIdAsync(userId.ToString())
+                    ?? throw new CantFindUserException();
+                var result = await userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                    return Ok(userId);
+                else
+                {
+                    foreach (var err in result.Errors)
+                        logger.LogError(err.Code + " ---- " + err.Description);
+                    throw new Exception("Something went wrong");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message + "\n" + ex.StackTrace);
+                logger.LogError("--- INNER EXCEPTION: ---\n" + ex.InnerException.Message);
+                throw new CantFindUserException();
+            }
+        }
     }
 }
