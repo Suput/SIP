@@ -1,6 +1,6 @@
 <div class="container">
     <h2><u><b>Создание документа о проведении мероприятия</b></u></h2>
-    <form [formGroup]="createForm" (ngSubmit)="onSubmit(createForm.value)">
+    <form [formGroup]="createForm" (ngSubmit)="onSubmit(createForm.value)" ngNativeValidate>
         <div style="text-align: right;">
             <!-- <h5>{{doc.organizationName}}</h5> -->
             <input type="text" placeholder="Название организации" required
@@ -11,7 +11,7 @@
             <input type="text" class="d-inline" placeholder="Номер приказа" required
                 formControlName="lawNumber">
             <br>
-            <h6 class="d-inline">О проведении</h6>
+            <h6 class="d-inline">О проведении мероприятия</h6>
             <!-- <h6 class="d-inline"> {{doc.name}} </h6> -->
             <input id="eventName" type="text" class="d-inline" placeholder="Название мероприятия" name="Name" [(ngModel)]="Name" required
                 formControlName="name">
@@ -26,8 +26,8 @@
         <!--1 -->
         <h6 class="d-inline">1. Провести</h6>
         <!-- <h6 class="d-inline"> {{doc.eventStart}} </h6> -->
-        <input type="datetime-local" class="d-inline" required 
-            formControlName="eventStart">
+        <input type="datetime-local" class="d-inline" required
+            formControlName="eventStart" title="Формат даты: 01.01.1991 10:30">
         <h6 class="d-inline">г.</h6>
         <!-- <h6 class="d-inline"> {{doc.fullname}}</h6> -->
         <input type="text" class="d-inline" placeholder="Полное название мероприятия" required
@@ -53,7 +53,7 @@
     представительских расходах по проведенному мероприятию с подтверждением их
     соответствующими первичными документами.</h6><br>
         <!--5 -->
-        <h6 class="d-inline">4. Утвердить список работников организации для участия в</h6>
+        <h6 class="d-inline">4. Утвердить список работников организации для участия в мероприятии</h6>
         <h6 class="d-inline"> {{Name}}</h6>
         <br>
         <select class="custom-select" id="select1" (change)="select1($event)">
