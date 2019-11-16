@@ -20,15 +20,17 @@ export class ManageUsersComponent implements OnInit {
     console.log(`User id --- ${user.id}`);
     const isTrue = confirm(`Вы уверены что хотите удалить пользователя: ${user.secondname} ${user.firstname} ${user.middlename}?`);
     console.log(`Want to delete? --- ${isTrue}`);
-    const index = this.Users.findIndex(x => x.user.id === user.id);
-    console.log(`Index in array --- ${index}`);
-    const response = await this.accountService.apiAccountUserIdDelete$Response({userId: user.id}).toPromise();
-    if (response.status === 200) {
-      if (index > -1) {
-        this.Users.splice(index, 1);
+    if (isTrue) {
+      const index = this.Users.findIndex(x => x.user.id === user.id);
+      console.log(`Index in array --- ${index}`);
+      const response = await this.accountService.apiAccountUserIdDelete$Response({userId: user.id}).toPromise();
+      if (response.status === 200) {
+        if (index > -1) {
+          this.Users.splice(index, 1);
+        }
+      } else {
+        alert('Что-то пошло не так!');
       }
-    } else {
-      alert('Что-то пошло не так!');
     }
   }
 }
