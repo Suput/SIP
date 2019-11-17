@@ -4,7 +4,7 @@
         <div style="text-align: right;">
             <!-- <h5>{{doc.organizationName}}</h5> -->
             <input type="text" placeholder="Название организации" required
-                formControlName="organizationName">
+                 value="ООО Гостиница 'ЮКИЁ'" disabled>
             <h6>наименование организации</h6>
             <h6 class="d-inline">ПРИКАЗ #</h6>
             <!-- <h6 class="d-inline"> {{doc.lawNumber}}</h6> -->
@@ -27,7 +27,7 @@
         <h6 class="d-inline">1. Провести</h6>
         <!-- <h6 class="d-inline"> {{doc.eventStart}} </h6> -->
         <input type="datetime-local" class="d-inline" required
-            formControlName="eventStart" title="Формат даты: 01.01.1991 10:30">
+            formControlName="eventStart" title="Формат даты: 01.01.1991 10:30" placeholder="01.01.1991 10:30">
         <h6 class="d-inline">г.</h6>
         <!-- <h6 class="d-inline"> {{doc.fullname}}</h6> -->
         <input type="text" class="d-inline" placeholder="Полное название мероприятия" required
@@ -116,12 +116,12 @@
         <div style="margin-top: 5vh; margin-bottom: 5vh;">
             <h6 class="d-inline">С приказом ознакомлен:</h6>
             <!-- <pre class="d-inline"> {{doc.supervisorSigniture}} </pre> -->
-            <input type="text" class="d-inline" placeholder="Ваша подпись" required
-                formControlName="supervisorSigniture">
+            <pre class="d-inline">                            </pre>
             <h6 class="d-inline">Подпись</h6>
         </div>
         
         <button type="submit" class="btn btn-success">Создать</button>
+        <button class="btn btn-primary" style="margin-left: 0.2vw;" (click)="false">Отправить</button>
     </form>
     <div class="alert alert-info" role="alert" *ngIf="isCreated">
         Документ о проведении мероприятия был успешно создан!
