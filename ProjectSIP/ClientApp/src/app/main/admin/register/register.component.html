@@ -1,8 +1,9 @@
 <div class="container">
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm.value)">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm.value)" ngNativeValidate>
         <div class="form-group">
             <label for="Email">Почта</label>
             <input type="email"
+                required
                 class="form-control"
                 id="Email"
                 placeholder="example@example.com"
@@ -11,6 +12,7 @@
         <div class="form-group">
             <label for="Password">Пароль</label>
             <input type="password"
+                required
                 class="form-control"
                 id="Password"
                 placeholder="SuperHardPassword"
@@ -19,6 +21,7 @@
         <div class="form-group">
             <label for="Secondname">Фамилия</label>
             <input type="text"
+                required
                 class="form-control"
                 id="Secondname"
                 placeholder="Иванов"
@@ -27,6 +30,7 @@
         <div class="form-group">
             <label for="Firstname">Имя</label>
             <input type="text"
+                required
                 class="form-control"
                 id="Firstname"
                 placeholder="Иван"
@@ -35,6 +39,7 @@
         <div class="form-group">
             <label for="Middlename">Отчество</label>
             <input type="text"
+                required
                 class="form-control"
                 id="Middlename"
                 placeholder="Иванович"
@@ -43,6 +48,7 @@
         <div class="form-group">
             <label for="Age">Возраст</label>
             <input type="number"
+                required
                 class="form-control"
                 id="Age"
                 placeholder="99"
@@ -51,6 +57,7 @@
         <div class="form-group">
             <label for="Position">Должность</label>
             <input type="text"
+                required
                 class="form-control"
                 id="Position"
                 placeholder="Генеральный директор"

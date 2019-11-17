@@ -48,10 +48,11 @@ export class CreateEventDocComponent implements OnInit {
     createData.mainAccountantId = +createData.mainAccountantId;
     createData.organizatorId = +createData.organizatorId;
     createData.supervisorId = +createData.supervisorId;
+    createData.organizationName = 'ООО Гостиница "ЮКИЁ"';
     console.log(createData);
     try {
-      const respone = await this.eventDocService.apiEventdocsPost$Json$Response({body: createData}).toPromise();
-      if (respone.status === 200) {
+      const request = await this.eventDocService.apiEventdocsPost$Json$Response({body: createData}).toPromise();
+      if (request.status === 200) {
         this.ShowInfoMessage();
       }
     } catch (ex) {

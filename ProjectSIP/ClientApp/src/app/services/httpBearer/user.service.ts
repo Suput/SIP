@@ -51,8 +51,9 @@ export class UserService {
       const jwtTime = jwt.exp;
       if (Date.now() > jwtTime * 1000) {
         return false;
+      } else {
+        return true;
       }
-      return true;
     }
     return false;
   }
